@@ -18,7 +18,7 @@ public class DbHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_DATETIME  = "datetime";
     private static final String KEY_DESG = "designation";
-    private String nada;
+    private String nada2;
 
     public DbHandler(Context context) {
         super(context,DB_NAME, null, DB_VERSION);
