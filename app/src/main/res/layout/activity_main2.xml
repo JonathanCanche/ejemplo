@@ -8,7 +8,7 @@
     tools:context=".Main2Activity">
 
     <ListView
-        android:id=""
+        android:id="@+id/milistview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

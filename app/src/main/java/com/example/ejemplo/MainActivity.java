@@ -2,13 +2,22 @@ package com.example.ejemplo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,16 +33,23 @@ public class MainActivity extends AppCompatActivity {
     private TextView total;
     private Button btnclean;
     private Button btnCambio;
+    private Button btnOpen;
     private EditText txtdinero;
     private int mostrar;
     private int click = 0;
+    private Date hora;
 
+    private ArrayList<String> datos;
+    private ArrayAdapter<String> adaptador1;
+    private ListView lv1;
+    private SharedPreferences prefe1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        hora=new Date();
 
         MasTorta = (ImageView)findViewById(R.id.tortaMas);
         MenosTorta = (ImageView)findViewById(R.id.tortaMenos);
@@ -46,8 +62,18 @@ public class MainActivity extends AppCompatActivity {
         ContadorBuger = (TextView)findViewById(R.id.ContadorBurger);
         btnclean = (Button)findViewById(R.id.btnLimpiar);
         btnCambio = (Button)findViewById(R.id.btnCalcular);
+        btnOpen = (Button)findViewById(R.id.btnabrir);
         txtdinero = (EditText)findViewById(R.id.TxtDinero);
         total = (TextView)findViewById(R.id.TotalTodo);
+
+
+        btnOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                startActivity(intent);
+            }
+        });
 
         btnCambio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Acción no permitida,introduzca una cantidad",Toast.LENGTH_LONG).show();
                 }else {
                     DarCambio();
+
                 }
 
             }
