@@ -18,6 +18,7 @@ public class Main4Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main4);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("prueba 4");
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton6);
         fab.setOnClickListener(new View.OnClickListener() {
