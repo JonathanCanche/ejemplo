@@ -1,5 +1,6 @@
 package com.example.ejemplo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> datos;
     private ArrayAdapter<String> adaptador1;
     private ListView lv1;
-    private SharedPreferences prefe1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this,Main4Activity.class);
                 startActivity(intent);
             }
         });
@@ -183,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
     public void limpiar(){
 
@@ -196,12 +200,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void DarCambio(){
         if (mostrar > Integer.parseInt(txtdinero.getText().toString())){
-            Toast.makeText(getApplicationContext(),"Operación invalida,cantidad insuficiente",Toast.LENGTH_LONG).show();
+            Toasty.error(getApplicationContext(), "Operación invalida,cantidad insuficiente", Toast.LENGTH_SHORT, true).show();
         }else {
             txtdinero.getText().toString();
             int dinero = Integer.valueOf(txtdinero.getText().toString());
             int resultado = dinero - mostrar;
-            Toast.makeText(getApplicationContext(),"Su cambio: "+resultado,Toast.LENGTH_LONG).show();
+            Toasty.success(getApplicationContext(), "Su cambio: "+resultado, Toast.LENGTH_SHORT, true).show();
         }
     }
+
 }
