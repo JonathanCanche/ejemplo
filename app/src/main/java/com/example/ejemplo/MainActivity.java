@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -41,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     private int mostrar;
     private int click = 0;
     private Date hora;
+    private String Vtorta = " torta";
+    private String Vtaco = " taco";
+    private String Vburger = " Burger";
+    private String n;
+    private String s;
+    private String p;
 
     private ArrayList<String> datos;
     private ArrayAdapter<String> adaptador1;
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Main4Activity.class);
+                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
                 startActivity(intent);
             }
         });
@@ -80,14 +87,13 @@ public class MainActivity extends AppCompatActivity {
         btnCambio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (txtdinero.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Acción no permitida,introduzca una cantidad",Toast.LENGTH_LONG).show();
-                }else {
+                if (ContadorBuger.getText().toString().equals("0") && ContadorTorta.getText().toString().equals("0") && ContadorTaco.getText().toString().equals("0")){
+                    Toast.makeText(getApplicationContext(),"Seleccione algun producto",Toast.LENGTH_LONG).show();
+                }else if(txtdinero.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Introduzca una cantidad",Toast.LENGTH_LONG).show();
+                }else{
                     DarCambio();
-
                 }
-
             }
         });
 
@@ -103,19 +109,18 @@ public class MainActivity extends AppCompatActivity {
         MasTorta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 click = Integer.parseInt(ContadorTorta.getText().toString());
                 mostrar = mostrar + 18;
                 click = click + 1;
                 ContadorTorta.setText(String.valueOf(click));
                 total.setText(String.valueOf(mostrar));
+                n = click + Vtorta;
             }
         });
 
         MenosTorta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (Integer.parseInt(ContadorTorta.getText().toString())<1){
                     Toast.makeText(getApplicationContext(),"Acción no permitida",Toast.LENGTH_LONG).show();
                 }else {
@@ -124,27 +129,26 @@ public class MainActivity extends AppCompatActivity {
                     click = click - 1;
                     ContadorTorta.setText(String.valueOf(click));
                     total.setText(String.valueOf(mostrar));
+                    n = click + Vtorta;
                 }
-
             }
         });
 
         MasTaco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 click = Integer.parseInt(ContadorTaco.getText().toString());
                 mostrar = mostrar + 10;
                 click = click + 1;
                 ContadorTaco.setText(String.valueOf(click));
                 total.setText(String.valueOf(mostrar));
+                s = click + Vtaco;
             }
         });
 
         MenosTaco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (Integer.parseInt(ContadorTaco.getText().toString())<1){
                     Toast.makeText(getApplicationContext(),"Acción no permitida",Toast.LENGTH_LONG).show();
                 }else {
@@ -153,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     click = click - 1;
                     ContadorTaco.setText(String.valueOf(click));
                     total.setText(String.valueOf(mostrar));
+                    s = click + Vtaco;
                 }
             }
         });
@@ -160,19 +165,19 @@ public class MainActivity extends AppCompatActivity {
         MasBurger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 click = Integer.parseInt(ContadorBuger.getText().toString());
                 mostrar = mostrar + 25;
                 click = click + 1;
                 ContadorBuger.setText(String.valueOf(click));
                 total.setText(String.valueOf(mostrar));
+                p = click + Vburger;
+                Toast.makeText(getApplicationContext(),"Acción no permitida"+p,Toast.LENGTH_LONG).show();
             }
         });
 
         MenosBurger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (Integer.parseInt(ContadorBuger.getText().toString())<1){
                     Toast.makeText(getApplicationContext(),"Acción no permitida",Toast.LENGTH_LONG).show();
                 }else {
@@ -181,12 +186,11 @@ public class MainActivity extends AppCompatActivity {
                     click = click - 1;
                     ContadorBuger.setText(String.valueOf(click));
                     total.setText(String.valueOf(mostrar));
+                    p = click + Vburger;
+                    Toast.makeText(getApplicationContext(),"Acción no permitida"+p,Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
-
     }
     public void limpiar(){
 
@@ -196,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
         total.setText("0");
         txtdinero.setText("");
         mostrar = 0;
+        n =null;
+        s=null;
+
     }
 
     public void DarCambio(){
@@ -205,7 +212,37 @@ public class MainActivity extends AppCompatActivity {
             txtdinero.getText().toString();
             int dinero = Integer.valueOf(txtdinero.getText().toString());
             int resultado = dinero - mostrar;
-            Toasty.success(getApplicationContext(), "Su cambio: "+resultado, Toast.LENGTH_SHORT, true).show();
+
+            if (n==null || n.equals("0 torta")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {s};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (s==null || s.equals("0 taco")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else {
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n, Toast.LENGTH_SHORT, true).show();
+
+                String[]  Total_Score =  new String[] {n,s};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }
+
         }
     }
 
