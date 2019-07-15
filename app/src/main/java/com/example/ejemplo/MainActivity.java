@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this,Main4Activity.class);
                 startActivity(intent);
             }
         });
@@ -171,7 +171,8 @@ public class MainActivity extends AppCompatActivity {
                 ContadorBuger.setText(String.valueOf(click));
                 total.setText(String.valueOf(mostrar));
                 p = click + Vburger;
-                Toast.makeText(getApplicationContext(),"Acción no permitida"+p,Toast.LENGTH_LONG).show();
+
+
             }
         });
 
@@ -187,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     ContadorBuger.setText(String.valueOf(click));
                     total.setText(String.valueOf(mostrar));
                     p = click + Vburger;
-                    Toast.makeText(getApplicationContext(),"Acción no permitida"+p,Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -213,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             int dinero = Integer.valueOf(txtdinero.getText().toString());
             int resultado = dinero - mostrar;
 
-            if (n==null || n.equals("0 torta")){
+            if (n==null || n.equals("0 torta") || p==null || p.equals("0 burger")){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {s};
 
@@ -222,7 +223,8 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (s==null || s.equals("0 taco")){
+
+            }else if (s==null || s.equals("0 taco") && p==null || p.equals("0 burger")){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {n};
 
@@ -231,10 +233,20 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else {
+            }else if (s==null || s.equals("0 taco") && n==null || n.equals("0 burger")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {p};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }
+            else {
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n, Toast.LENGTH_SHORT, true).show();
 
-                String[]  Total_Score =  new String[] {n,s};
+                String[]  Total_Score =  new String[] {n,s,p};
 
                 String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
                         replaceAll("(^.|.$)", "  ").replace(", ", "  , " );

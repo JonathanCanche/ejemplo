@@ -20,7 +20,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <include layout="@layout/content_main4" />
+
+    </ScrollView>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -33,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="80dp"
             android:layout_marginRight="15dp"
             android:elevation="12dp"
             android:src="@drawable/ic_shopping_cart_black_24dp"
@@ -45,7 +51,7 @@
             android:layout_width="30dp"
             android:layout_height="20dp"
             android:layout_gravity="bottom|left"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="70dp"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:layout_marginRight="20dp"
@@ -55,5 +61,30 @@
             android:elevation="12dp"
             android:text="0" />
     </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:backgroundTint="@color/colorAccent"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
