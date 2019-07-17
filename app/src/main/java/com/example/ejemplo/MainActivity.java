@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,23 +33,30 @@ public class MainActivity extends AppCompatActivity {
     private ImageView MenosTaco;
     private ImageView MasBurger;
     private ImageView MenosBurger;
+    private ImageView MasOrden;
+    private ImageView MenosOrden;
     private TextView ContadorTorta;
     private TextView ContadorTaco;
     private TextView ContadorBuger;
+    private TextView ContadorOrden;
+    private Switch CambiarPrecio;
     private TextView total;
     private Button btnclean;
     private Button btnCambio;
     private Button btnOpen;
     private EditText txtdinero;
+    private EditText NuevaCantidad;
     private int mostrar;
     private int click = 0;
     private Date hora;
     private String Vtorta = " torta";
     private String Vtaco = " taco";
-    private String Vburger = " Burger";
+    private String Vburger = " burger";
+    private String VOrden = " orden";
     private String n;
     private String s;
     private String p;
+    private String o;
 
     private ArrayList<String> datos;
     private ArrayAdapter<String> adaptador1;
@@ -66,20 +75,41 @@ public class MainActivity extends AppCompatActivity {
         MenosTaco = (ImageView)findViewById(R.id.tacoMenos);
         MasBurger = (ImageView)findViewById(R.id.burgerMas);
         MenosBurger = (ImageView)findViewById(R.id.burgerMenos);
+        MasOrden = (ImageView)findViewById(R.id.OrdenMas);
+        MenosOrden = (ImageView)findViewById(R.id.OrdenMenos);
         ContadorTorta = (TextView)findViewById(R.id.ContadorTorta);
         ContadorTaco = (TextView)findViewById(R.id.ContadorTaco);
         ContadorBuger = (TextView)findViewById(R.id.ContadorBurger);
+        ContadorOrden = (TextView)findViewById(R.id.ContadorOrden);
         btnclean = (Button)findViewById(R.id.btnLimpiar);
         btnCambio = (Button)findViewById(R.id.btnCalcular);
         btnOpen = (Button)findViewById(R.id.btnabrir);
         txtdinero = (EditText)findViewById(R.id.TxtDinero);
         total = (TextView)findViewById(R.id.TotalTodo);
+        CambiarPrecio = (Switch)findViewById(R.id.switch1);
+        NuevaCantidad = (EditText)findViewById(R.id.editText);
 
+
+        CambiarPrecio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    NuevaCantidad.setEnabled(true);
+                    ContadorOrden.setText("0");
+                    limpiar();
+
+                }else {
+                    NuevaCantidad.setEnabled(false);
+                    ContadorOrden.setText("0");
+                    limpiar();
+                }
+            }
+        });
 
         btnOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Main4Activity.class);
+                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
                 startActivity(intent);
             }
         });
@@ -102,6 +132,59 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 limpiar();
+            }
+        });
+
+
+        MasOrden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CambiarPrecio.isChecked()==false){
+                    mostrar = mostrar + 60;
+                    click = Integer.parseInt(ContadorOrden.getText().toString());
+                    click = click + 1;
+                    ContadorOrden.setText(String.valueOf(click));
+                    total.setText(String.valueOf(mostrar));
+                    o = click + VOrden;
+                }else{
+                    if (NuevaCantidad.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(),"Introduzca una cantidad",Toast.LENGTH_LONG).show();
+                    }else {
+                        mostrar = mostrar + Integer.parseInt(NuevaCantidad.getText().toString());
+                        click = Integer.parseInt(ContadorOrden.getText().toString());
+                        click = click + 1;
+                        ContadorOrden.setText(String.valueOf(click));
+                        total.setText(String.valueOf(mostrar));
+                        o = click + VOrden;
+                    }
+                }
+            }
+        });
+
+        MenosOrden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Integer.parseInt(ContadorOrden.getText().toString())<1){
+                    Toast.makeText(getApplicationContext(),"Acción no permitida",Toast.LENGTH_LONG).show();
+                }else {
+                    if (CambiarPrecio.isChecked()==false){
+                        mostrar = mostrar - 60;
+
+                        click = Integer.parseInt(ContadorOrden.getText().toString());
+                        click = click - 1;
+                        ContadorOrden.setText(String.valueOf(click));
+                        total.setText(String.valueOf(mostrar));
+                        o = click + VOrden;
+                    }else{
+                        mostrar = mostrar - Integer.parseInt(NuevaCantidad.getText().toString());
+
+                        click = Integer.parseInt(ContadorOrden.getText().toString());
+                        click = click - 1;
+                        ContadorOrden.setText(String.valueOf(click));
+                        total.setText(String.valueOf(mostrar));
+                        o = click + VOrden;
+                    }
+                }
             }
         });
 
@@ -171,8 +254,6 @@ public class MainActivity extends AppCompatActivity {
                 ContadorBuger.setText(String.valueOf(click));
                 total.setText(String.valueOf(mostrar));
                 p = click + Vburger;
-
-
             }
         });
 
@@ -188,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
                     ContadorBuger.setText(String.valueOf(click));
                     total.setText(String.valueOf(mostrar));
                     p = click + Vburger;
-
                 }
             }
         });
@@ -198,33 +278,26 @@ public class MainActivity extends AppCompatActivity {
         ContadorBuger.setText("0");
         ContadorTorta.setText("0");
         ContadorTaco.setText("0");
+        ContadorOrden.setText("0");
+        NuevaCantidad.setText("");
         total.setText("0");
         txtdinero.setText("");
         mostrar = 0;
         n =null;
         s=null;
+        p=null;
 
     }
 
     public void DarCambio(){
         if (mostrar > Integer.parseInt(txtdinero.getText().toString())){
-            Toasty.error(getApplicationContext(), "Operación invalida,cantidad insuficiente", Toast.LENGTH_SHORT, true).show();
+            Toasty.error(getApplicationContext(), "Cantidad insuficiente", Toast.LENGTH_SHORT, true).show();
         }else {
             txtdinero.getText().toString();
             int dinero = Integer.valueOf(txtdinero.getText().toString());
             int resultado = dinero - mostrar;
 
-            if (n==null || n.equals("0 torta") || p==null || p.equals("0 burger")){
-                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s, Toast.LENGTH_SHORT, true).show();
-                String[]  Total_Score =  new String[] {s};
-
-                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
-                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
-
-                DbHandler dbHandler = new DbHandler(MainActivity.this);
-                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-
-            }else if (s==null || s.equals("0 taco") && p==null || p.equals("0 burger")){
+            if ((s==null || s.equals("0 taco")) && (p==null || p.equals("0 burger")) && (o==null || o.equals("0 orden"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {n};
 
@@ -233,8 +306,19 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (s==null || s.equals("0 taco") && n==null || n.equals("0 burger")){
-                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n, Toast.LENGTH_SHORT, true).show();
+
+            }else if ((p==null || p.equals("0 burger")) && (n==null || n.equals("0 torta")) && (o==null || o.equals("0 orden"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {s};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if ((s==null || s.equals("0 taco")) && (n==null || n.equals("0 torta")) && (o==null || o.equals("0 orden"))){
+
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+p, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {p};
 
                 String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
@@ -242,11 +326,110 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }
-            else {
+            }else if ((s==null || s.equals("0 taco")) && (n==null || n.equals("0 torta")) && (p==null || p.equals("0 burger"))){
+
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (s==null || s.equals("0 taco") && (n==null || n.equals("0 torta"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+p+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {p,o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (s==null || s.equals("0 taco") && (p==null || p.equals("0 burger"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n,o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (s==null || s.equals("0 taco") && (o==null || p.equals("0 orden"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n+p, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n,p};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (n==null || n.equals("0 torta") && (p==null || p.equals("0 burger"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {s,o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (n==null || n.equals("0 torta") && (o==null || o.equals("0 orden"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+p, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {s,p};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (p==null || p.equals("0 burger") && (o==null || o.equals("0 orden"))){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n,s};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (s==null || s.equals("0 taco")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n+p+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n,p,o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (n==null || n.equals("0 torta")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+p+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {s,p,o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (p==null || p.equals("0 burger")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n+o, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n,s,o};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else if (o==null || o.equals("0 orden")){
+                Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n+p, Toast.LENGTH_SHORT, true).show();
+                String[]  Total_Score =  new String[] {n,s,p};
+
+                String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
+                        replaceAll("(^.|.$)", "  ").replace(", ", "  , " );
+
+                DbHandler dbHandler = new DbHandler(MainActivity.this);
+                dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
+            }else {
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n, Toast.LENGTH_SHORT, true).show();
 
-                String[]  Total_Score =  new String[] {n,s,p};
+                String[]  Total_Score =  new String[] {n,s,p,o};
 
                 String result_ScoreP1 = ("" + Arrays.asList(Total_Score)).
                         replaceAll("(^.|.$)", "  ").replace(", ", "  , " );

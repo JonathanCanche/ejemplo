@@ -33,6 +33,7 @@ public class Main4Activity extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     Intent b = new Intent(Main4Activity.this,Main2Activity.class);
                     startActivity(b);
+                    finish();
                     break;
             }
             return false;

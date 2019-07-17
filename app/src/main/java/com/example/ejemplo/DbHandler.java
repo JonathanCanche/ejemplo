@@ -92,4 +92,14 @@ public class DbHandler extends SQLiteOpenHelper {
         int count = db.update(TABLE_Users, cVals, KEY_ID+" = ?",new String[]{String.valueOf(id)});
         return  count;
     }
+
+    public Cursor Distance() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor Distance = db.rawQuery("SELECT Sum(" + KEY_NAME + ") AS myTotal FROM " + TABLE_Users, null);
+        return Distance;
+    }
+    public void DeleteTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_Users, null, null);
+    }
 }

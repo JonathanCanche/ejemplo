@@ -159,18 +159,93 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:id="@+id/image4"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_control_point_black_24dp"
+                android:layout_gravity="left"
+                android:id="@+id/OrdenMas"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/ContadorOrden"
+                android:gravity="center"
+                android:text="0"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                app:srcCompat="@drawable/ic_remove_circle_outline_black_24dp"
+                android:id="@+id/OrdenMenos"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/editText"
+                android:enabled="false"
+                android:layout_width="161dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="nuevo precio"
+                android:inputType="textPersonName" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cambiar precio" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_gravity="bottom"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/TotalTodoe"
+                android:id="@+id/TotalTodo"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="0"/>
+                android:textColor="@android:color/white"
+                app:elevation="8dp"
+                android:background="@color/colorPrimary"
+                app:pressedTranslationZ="12dp"
+                android:elevation="12dp"
+                android:text="0" />
 
             <Button
                 android:id="@+id/btnLimpiar"
@@ -220,42 +295,6 @@
 
 
     </LinearLayout>
-
-
-
-    <FrameLayout
-    android:layout_width="wrap_content"
-    android:layout_gravity="right"
-    android:layout_height="wrap_content"
-    >
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton6"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|left"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="15dp"
-        android:elevation="12dp"
-        android:src="@drawable/ic_shopping_cart_black_24dp"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"  />
-
-    <TextView
-        android:id="@+id/TotalTodo"
-        android:layout_width="30dp"
-        android:layout_height="20dp"
-        android:layout_gravity="bottom|left"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:layout_marginRight="20dp"
-        app:elevation="8dp"
-        android:background="@color/colorPrimary"
-        app:pressedTranslationZ="12dp"
-        android:elevation="12dp"
-        android:text="0" />
-</FrameLayout>
 
 
 </LinearLayout >
