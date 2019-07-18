@@ -51,15 +51,6 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tnmView"
-        android:text="nada"
-        android:visibility="invisible"
-        android:textColor="@android:color/black"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="match_parent"

@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- Search, should appear as action button -->
     <item android:id="@+id/action_search"
-        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:icon="@drawable/ic_open_in_browser_black_24dp"
+        android:iconTint="@android:color/white"
         android:title="Corte"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/action_corte"
-        android:title="Corte"
-        android:checked="true"
-        android:checkable="false"
-        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_corte"
+        android:title="Notification"
+        app:actionLayout="@layout/custom_corte"
+        app:showAsAction="always"/>
 
 </menu>

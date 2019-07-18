@@ -3,6 +3,7 @@ package com.example.ejemplo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -48,6 +49,7 @@ public class Main2Activity extends AppCompatActivity {
     private String result = "";
     private TextView item;
     private RelativeLayout rl;
+    private TextView corte;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -87,9 +89,6 @@ public class Main2Activity extends AppCompatActivity {
         lv.setAdapter(adapter);
 
 
-
-
-        tnmView = (TextView) findViewById(R.id.tnmView);
         item = (TextView)findViewById(R.id.action_corte);
         rl = (RelativeLayout)findViewById(R.id.rlInvisible);
 
@@ -105,16 +104,34 @@ public class Main2Activity extends AppCompatActivity {
         if (Distance.moveToNext())
             result = String.valueOf(Distance.getDouble(Distance.getColumnIndex("myTotal")));
 
-       tnmView.setText(result);
+
 
 
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_corte, menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_corte, menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.action_corte);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        corte = (TextView) actionView.findViewById(R.id.txtCorte);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
+        return true;
+    }
+    private void setupBadge() {
+
+        corte.setText(String.valueOf(result));
     }
 
     @Override
@@ -152,7 +169,6 @@ public class Main2Activity extends AppCompatActivity {
                 builder.show();
                 return true;
             case R.id.action_corte:
-                item.setTitle(result);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
