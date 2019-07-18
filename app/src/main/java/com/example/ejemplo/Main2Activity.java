@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,15 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +46,8 @@ public class Main2Activity extends AppCompatActivity {
     private TextView tnmView;
     private DbHandler dbManager;
     private String result = "";
-    private ListAdapter adapter;
+    private TextView item;
+    private RelativeLayout rl;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -78,18 +83,21 @@ public class Main2Activity extends AppCompatActivity {
         final DbHandler db = new DbHandler(this);
         ArrayList<HashMap<String, String>> userList = db.GetUsers();
         ListView lv = (ListView) findViewById(R.id.user_list);
-        adapter = new SimpleAdapter(Main2Activity.this, userList, R.layout.list_row,new String[]{"name","location"}, new int[]{R.id.name, R.id.location});
+        ListAdapter adapter = new SimpleAdapter(Main2Activity.this, userList, R.layout.list_row,new String[]{"name","location"}, new int[]{R.id.name, R.id.location});
         lv.setAdapter(adapter);
 
-        tnmView = (TextView) findViewById(R.id.tnmView);
-        btnCorte = (Button) findViewById(R.id.btnCortes);
 
-        btnCorte.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tnmView.setTextColor(Color.parseColor("#09E8B8"));
-            }
-        });
+
+
+        tnmView = (TextView) findViewById(R.id.tnmView);
+        item = (TextView)findViewById(R.id.action_corte);
+        rl = (RelativeLayout)findViewById(R.id.rlInvisible);
+
+        if (adapter.isEmpty()){
+            rl.setVisibility(View.VISIBLE);
+        }else {
+
+        }
 
         dbManager = new DbHandler(this);
         Cursor Distance = dbManager.Distance();
@@ -112,6 +120,7 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
+
         switch (item.getItemId()) {
             case R.id.action_search:
                 AlertDialog.Builder builder = new AlertDialog.Builder(Main2Activity.this);
@@ -141,6 +150,9 @@ public class Main2Activity extends AppCompatActivity {
 
                 builder.create();
                 builder.show();
+                return true;
+            case R.id.action_corte:
+                item.setTitle(result);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

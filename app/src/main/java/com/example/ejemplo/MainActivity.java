@@ -2,11 +2,14 @@ package com.example.ejemplo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -62,12 +65,15 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> adaptador1;
     private ListView lv1;
 
+    private TextView smsCountTxt;
+    private int pendingSMSCount = 500;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        hora=new Date();
 
         MasTorta = (ImageView)findViewById(R.id.tortaMas);
         MenosTorta = (ImageView)findViewById(R.id.tortaMenos);
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         btnCambio = (Button)findViewById(R.id.btnCalcular);
         btnOpen = (Button)findViewById(R.id.btnabrir);
         txtdinero = (EditText)findViewById(R.id.TxtDinero);
-        total = (TextView)findViewById(R.id.TotalTodo);
+//        total = (TextView)findViewById(R.id.TotalTodo);
         CambiarPrecio = (Switch)findViewById(R.id.switch1);
         NuevaCantidad = (EditText)findViewById(R.id.editText);
 
@@ -275,6 +281,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.action_notifications);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        total = (TextView) actionView.findViewById(R.id.notification_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_notifications: {
+
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupBadge() {
+
+        total.setText(String.valueOf(mostrar));
+    }
+
     public void limpiar(){
 
         ContadorBuger.setText("0");

@@ -6,5 +6,10 @@
         android:icon="@drawable/ic_shopping_cart_black_24dp"
         android:title="Corte"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_corte"
+        android:title="Corte"
+        android:checked="true"
+        android:checkable="false"
+        app:showAsAction="always" />
 
 </menu>

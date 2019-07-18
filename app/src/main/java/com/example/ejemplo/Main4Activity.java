@@ -56,14 +56,14 @@ public class Main4Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("prueba 4");
 
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton6);
+        /*FloatingActionButton fab = findViewById(R.id.floatingActionButton6);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 
 }

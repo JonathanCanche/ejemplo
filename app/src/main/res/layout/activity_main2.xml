@@ -19,22 +19,46 @@
             android:layout_height="wrap_content" />
 
 
-
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlInvisible"
+        android:visibility="invisible"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/Vacio"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="Vacio" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@id/Vacio"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_control_point_black_24dp" />
+
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tnmView"
         android:text="nada"
+        android:visibility="invisible"
         android:textColor="@android:color/black"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <Button
-        android:id="@+id/btnCortes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Button" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
