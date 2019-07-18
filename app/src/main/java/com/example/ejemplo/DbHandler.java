@@ -14,9 +14,12 @@ public class DbHandler extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "usersdb";
     private static final String TABLE_Users = "userdetails";
+    private static final String TABLE_Ucorte = "cortedetails";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_LOC = "location";
+    private static final String KEY_TOTAL = "corte";
+    private static final String KEY_ID_CORTE = "idcorte";
     public DbHandler(Context context){
         super(context,DB_NAME, null, DB_VERSION);
     }
@@ -25,7 +28,11 @@ public class DbHandler extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_Users + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_LOC + " TEXT" + ")";
+
+        String CREATE_TABLE2 = "CREATE TABLE " + TABLE_Ucorte + "("
+                + KEY_ID_CORTE + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_TOTAL + " TEXT" + ")";
         db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE2);
     }
 
     @Override
@@ -36,6 +43,32 @@ public class DbHandler extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
 
+    }
+
+    // Adding new User Details
+    void insertCorteDetails(String corte){
+        //Get the Data Repository in write mode
+        SQLiteDatabase db = this.getWritableDatabase();
+        //Create a new map of values, where column names are the keys
+        ContentValues cValues = new ContentValues();
+        cValues.put(KEY_TOTAL, corte);
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insert(TABLE_Ucorte,null, cValues);
+        db.close();
+    }
+
+    // Get User Details
+    public ArrayList<HashMap<String, String>> GetCorte(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<HashMap<String, String>> userList = new ArrayList<>();
+        String query = "SELECT corte FROM "+ TABLE_Ucorte;
+        Cursor cursor = db.rawQuery(query,null);
+        while (cursor.moveToNext()){
+            HashMap<String,String> cort = new HashMap<>();
+            cort.put("corte",cursor.getString(cursor.getColumnIndex(KEY_TOTAL)));
+            userList.add(cort);
+        }
+        return  userList;
     }
 
     // Adding new User Details
@@ -101,5 +134,6 @@ public class DbHandler extends SQLiteOpenHelper {
     public void DeleteTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_Users, null, null);
+        db.close();
     }
 }

@@ -1,9 +1,11 @@
 package com.example.ejemplo;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -96,6 +98,8 @@ public class Main2Activity extends AppCompatActivity {
             result = String.valueOf(Distance.getDouble(Distance.getColumnIndex("myTotal")));
 
        tnmView.setText(result);
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,11 +114,33 @@ public class Main2Activity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_search:
-                dbManager.DeleteTable();
-                Intent i = new Intent(Main2Activity.this,MainActivity.class);
-                startActivity(i);
-                Toast.makeText(getApplicationContext(),"Lista limpio"+result,Toast.LENGTH_LONG).show();
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(Main2Activity.this);
+
+                builder.setTitle("Titulo")
+                        .setMessage("El Mensaje para el usuario")
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dbManager.DeleteTable();
+                                        Intent i = new Intent(Main2Activity.this,MainActivity.class);
+                                        startActivity(i);
+                                        Toast.makeText(getApplicationContext(),"Lista limpio",Toast.LENGTH_LONG).show();
+                                        DbHandler dbHandler = new DbHandler(Main2Activity.this);
+                                        dbHandler.insertCorteDetails(result);
+                                        finish();
+                                    }
+                                })
+                        .setNegativeButton("CANCELAR",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                builder.create();
+                builder.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

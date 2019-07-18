@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 limpiar();
+                Intent intent = new Intent(MainActivity.this,Main5Activity.class);
+                startActivity(intent);
             }
         });
 
