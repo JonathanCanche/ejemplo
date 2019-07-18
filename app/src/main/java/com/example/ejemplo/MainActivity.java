@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         btnCambio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContadorBuger.getText().toString().equals("0") && ContadorTorta.getText().toString().equals("0") && ContadorTaco.getText().toString().equals("0")){
+                if (ContadorBuger.getText().toString().equals("0") && ContadorTorta.getText().toString().equals("0") && ContadorTaco.getText().toString().equals("0") && ContadorOrden.getText().toString().equals("0")){
                     Toast.makeText(getApplicationContext(),"Seleccione algun producto",Toast.LENGTH_LONG).show();
                 }else if(txtdinero.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Introduzca una cantidad",Toast.LENGTH_LONG).show();
@@ -334,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
         n =null;
         s=null;
         p=null;
+        o=null;
 
     }
 
@@ -384,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (s==null || s.equals("0 taco") && (n==null || n.equals("0 torta"))){
+            }else if ((s==null || s.equals("0 taco")) && (n==null || n.equals("0 torta"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+p+o, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {p,o};
 
@@ -393,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (s==null || s.equals("0 taco") && (p==null || p.equals("0 burger"))){
+            }else if ((s==null || s.equals("0 taco")) && (p==null || p.equals("0 burger"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n+o, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {n,o};
 
@@ -402,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (s==null || s.equals("0 taco") && (o==null || p.equals("0 orden"))){
+            }else if ((s==null || s.equals("0 taco")) && (o==null || p.equals("0 orden"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+n+p, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {n,p};
 
@@ -411,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (n==null || n.equals("0 torta") && (p==null || p.equals("0 burger"))){
+            }else if ((n==null || n.equals("0 torta")) && (p==null || p.equals("0 burger"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+o, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {s,o};
 
@@ -420,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (n==null || n.equals("0 torta") && (o==null || o.equals("0 orden"))){
+            }else if ((n==null || n.equals("0 torta")) && (o==null || o.equals("0 orden"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+p, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {s,p};
 
@@ -429,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
 
                 DbHandler dbHandler = new DbHandler(MainActivity.this);
                 dbHandler.insertUserDetails(Integer.toString(mostrar),result_ScoreP1);
-            }else if (p==null || p.equals("0 burger") && (o==null || o.equals("0 orden"))){
+            }else if ((p==null || p.equals("0 burger")) && (o==null || o.equals("0 orden"))){
                 Toasty.success(getApplicationContext(), "Su cambio: "+resultado+s+n, Toast.LENGTH_SHORT, true).show();
                 String[]  Total_Score =  new String[] {n,s};
 
